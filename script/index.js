@@ -52,6 +52,17 @@ const displayVideos =(videos)=>{
     //To clear all data and load by button click
     videoContainer.innerHTML = "";
 
+    if(videos.length == 0){
+        videoContainer.innerHTML = 
+        `
+        <div class="py-20 col-span-full flex flex-col justify-center items-center text-center">
+        <img class="w-[120px]" src="./res/Icon.png" alt="">
+        <h2 class="text-2xl font-bold">Sorry!! There is no content</h2>
+    </div>`
+
+        return;
+    }
+
     videos.forEach(video => {
         //console.log(video)
 
