@@ -34,6 +34,8 @@ function loadVideos(){
     })
 }
 
+
+
 //to filter content types
 
 
@@ -101,13 +103,14 @@ const displayVideos =(videos)=>{
 
                 </div>
                 <div class="intro">
-                    <h2 class="text-sm font-semibold">Shape of You</h2>
-                    <p class="text-sm text-gray-400 flex gap-1">${video.authors[0].profile_name} <img class="w-5 h-5" src="https://img.icons8.com/?size=48&id=98A4yZTt9abw&format=png" alt=""></p>
+                    <h2 class="text-sm font-semibold">${video.title}</h2>
+                    <p class="text-sm text-gray-400 flex gap-1">${video.authors[0].profile_name} ${video.authors[0].verified == true?`<img class="w-5 h-5" src="https://img.icons8.com/?size=48&id=98A4yZTt9abw&format=png" alt="">` :``}</p>
                     <p class="text-sm text-gray-400 flex gap-">${video.others.views}</p>
 
                 </div>
               
             </div>
+            <button onclick=loadVideoDetails('${video.video_id}') class="btn btn-block">Show Details</button>
           </div>
         `
 
@@ -135,6 +138,38 @@ const loadCategoryVideos =(id)=>{
     
 
   })
+
+}
+
+const loadVideoDetails =(videoId)=>{
+  console.log(videoId);
+  const url = `https://openapi.programming-hero.com/api/phero-tube/video/${videoId}`;
+  fetch(url)
+  .then(res => res.json())
+  .then(data => displayVideoDetails(data.video))
+}
+
+const displayVideoDetails =(video) => {
+  console.log(video);
+
+  document.getElementById('video_details').showModal();
+  const detailsContainer = document.getElementById('details-container');
+
+  detailsContainer.innerHTML = `
+  <div class="card bg-base-100 image-full shadow-sm">
+  <figure>
+    <img
+      src="${video.thumbnail}"
+      alt="Shoes" />
+  </figure>
+  <div class="card-body">
+    <h2 class="card-title">${video.title}</h2>
+    <p>${video.description}</p>
+    <div class="card-actions justify-end">
+    </div>
+  </div>
+</div>
+  `
 
 }
 
